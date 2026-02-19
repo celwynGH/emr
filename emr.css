@@ -1,0 +1,96 @@
+body {
+  font-family: Arial;
+  margin: 0;
+  padding: 20px;
+  background: #eef2f7;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.dashboard {
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+input, textarea {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  margin: 6px 0;
+}
+
+textarea {
+  height: 80px;
+}
+
+button {
+  padding: 8px 12px;
+  margin-top: 5px;
+  cursor: pointer;
+  background: #2c7be5;
+  color: white;
+  border: none;
+}
+
+.record-card {
+  background: white;
+  padding: 15px;
+  margin: 10px 0;
+  border-left: 5px solid #2c7be5;
+}
+
+.actions button {
+  margin-right: 5px;
+  background: #555;
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+}
+
+/* PRINT FORMAT */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .printable, .printable * {
+    visibility: visible;
+  }
+
+  .printable {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}
+
+/* for the LOGO */
+
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.logo-container {
+  position: absolute;
+  left: 0;
+}
+
+.clinic-logo {
+  height: 70px;
+  width: auto;
+}
+
+.header-center {
+  text-align: center;
+}
