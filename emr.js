@@ -121,7 +121,7 @@ function printRecord(index) {
 
     <div style="margin-top:50px;">
       _____________________________<br>
-      Dr. Celwyn A. Panis, RN (Char kaayo) 😂<br>
+      Dr. Celwyn A. Panis, (Char kaayo) 😂<br>
       License No: ____________
     </div>
   `;
@@ -158,5 +158,57 @@ function render() {
     `;
   });
 }
+
+
+<button onclick="exportPDF(${i})">Export PDF</button>
+
+//for PDF EXPORT
+function exportPDF(index) {
+
+  const r = records[index];
+
+  const element = document.createElement("div");
+
+  element.innerHTML = `
+    <div style="text-align:center; border-bottom:2px solid black; padding-bottom:10px;">
+      <img src="images/clinic-logo.png" style="height:70px;"><br>
+      <h2>CELWYN (char lang) MEDICAL CLINIC</h2>
+      <p>123 Hanap-hanapin Street, Di-matagpuan City, Philippines 1000</p>
+      <p>📞 +63 912 345 6789 | ✉ celwynclinic@email.com</p>
+    </div>
+
+    <h3 style="margin-top:20px;">PATIENT MEDICAL RECORD</h3>
+
+    <p><strong>Name:</strong> ${r.name}</p>
+    <p><strong>Age:</strong> ${r.age}</p>
+    <p><strong>Gender:</strong> ${r.gender}</p>
+    <p><strong>Date:</strong> ${r.date}</p>
+
+    <hr>
+
+    <h4>Vital Signs</h4>
+    <p>Blood Pressure: ${r.bp}</p>
+    <p>Heart Rate: ${r.hr}</p>
+    <p>Temperature: ${r.temp}</p>
+
+    <hr>
+
+    <h4>Clinical Details</h4>
+    <p><strong>Diagnosis:</strong> ${r.diagnosis}</p>
+    <p><strong>Medication:</strong> ${r.medication}</p>
+    <p><strong>Notes:</strong><br>${r.notes}</p>
+
+    <br><br><br>
+
+    <div style="margin-top:50px;">
+      _____________________________<br>
+      Dr. Celwyn A. Panis, (Char kaayo) 😂<br>
+      License No: ____________
+    </div>
+  `;
+
+  html2pdf().from(element).save(r.name + "_Medical_Record.pdf");
+}
+
 
 render();
