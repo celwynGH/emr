@@ -10,43 +10,36 @@
 <body>
 
 <header class="main-header">
-
   <div class="logo-container">
-    <img src="images/clinic-logo.png" alt="imahe para sa Logo" class="clinic-logo">
+    <img src="images/clinic-logo.png" alt="Clinic Logo" class="clinic-logo">
   </div>
 
   <div class="header-center">
-    <h1>CELWYN (char lang) MEDICAL CLINIC</h1>
+    <h1>CELWYN MEDICAL CLINIC</h1>
     <p class="clinic-address">
       123 Hanap-hanapin Street, Di-matagpuan City, Philippines 1000
     </p>
     <p class="clinic-contact">
       📞 +63 912 345 6789 | ✉ celwynclinic@email.com
     </p>
-
     <div class="dashboard">
       Total Patients: <span id="totalPatients">0</span>
     </div>
   </div>
-
 </header>
 
-
-
 <section class="form-section">
-
   <h2>Patient Information</h2>
 
   <input type="hidden" id="editIndex">
-
   <input type="text" id="name" placeholder="Full Name">
   <input type="number" id="age" placeholder="Age">
-  <select id="gender">
-  <option value="">Select Gender</option>
-  <option value="Male">Male</option>
-  <option value="Female">Female</option>
-</select>
 
+  <select id="gender">
+    <option value="">Select Gender</option>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+  </select>
 
   <h3>Vital Signs</h3>
   <input type="text" id="bp" placeholder="Blood Pressure">
@@ -70,8 +63,11 @@
   <div id="records"></div>
 </section>
 
-<script src="emr.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="emr.js"></script>
+
+<div id="pdfContent" style="display:none;"></div>
+
 
 </body>
 </html>

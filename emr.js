@@ -3,18 +3,9 @@ let records = JSON.parse(localStorage.getItem("proEMR")) || [];
 function saveToStorage() {
   localStorage.setItem("proEMR", JSON.stringify(records));
 }
-//from here
-function saveRecord() {
 
+function saveRecord() {
   const nameInput = document.getElementById("name").value.trim();
-  const ageInput = document.getElementById("age").value;
-  const genderInput = document.getElementById("gender").value;
-  const bpInput = document.getElementById("bp").value;
-  const hrInput = document.getElementById("hr").value;
-  const tempInput = document.getElementById("temp").value;
-  const diagnosisInput = document.getElementById("diagnosis").value;
-  const medicationInput = document.getElementById("medication").value;
-  const notesInput = document.getElementById("notes").value;
 
   if (nameInput === "") {
     alert("Patient name is required");
@@ -23,14 +14,14 @@ function saveRecord() {
 
   const record = {
     name: nameInput,
-    age: ageInput,
-    gender: genderInput,
-    bp: bpInput,
-    hr: hrInput,
-    temp: tempInput,
-    diagnosis: diagnosisInput,
-    medication: medicationInput,
-    notes: notesInput,
+    age: document.getElementById("age").value,
+    gender: document.getElementById("gender").value,
+    bp: document.getElementById("bp").value,
+    hr: document.getElementById("hr").value,
+    temp: document.getElementById("temp").value,
+    diagnosis: document.getElementById("diagnosis").value,
+    medication: document.getElementById("medication").value,
+    notes: document.getElementById("notes").value,
     date: new Date().toLocaleString()
   };
 
@@ -46,11 +37,11 @@ function saveRecord() {
   clearForm();
   saveToStorage();
   render();
-} //end here
-
+}
 
 function clearForm() {
-  document.querySelectorAll("input, textarea").forEach(el => el.value = "");
+  document.querySelectorAll(".form-section input, .form-section textarea, .form-section select")
+    .forEach(el => el.value = "");
 }
 
 function deleteRecord(index) {
@@ -60,7 +51,7 @@ function deleteRecord(index) {
     render();
   }
 }
-//from here
+
 function editRecord(index) {
   const r = records[index];
 
@@ -76,13 +67,8 @@ function editRecord(index) {
 
   document.getElementById("editIndex").value = index;
 }
-//end here
-
-
-//start here for print record
 
 function printRecord(index) {
-
   const r = records[index];
 
   const div = document.createElement("div");
@@ -91,7 +77,7 @@ function printRecord(index) {
   div.innerHTML = `
     <div style="text-align:center; border-bottom:2px solid black; padding-bottom:10px;">
       <img src="images/clinic-logo.png" style="height:70px;"><br>
-      <h2>CELWYN (char lang) MEDICAL CLINIC</h2>
+      <h2>CELWYN MEDICAL CLINIC</h2>
       <p>123 Hanap-hanapin Street, Di-matagpuan City, Philippines 1000</p>
       <p>📞 +63 912 345 6789 | ✉ celwynclinic@email.com</p>
     </div>
@@ -121,7 +107,7 @@ function printRecord(index) {
 
     <div style="margin-top:50px;">
       _____________________________<br>
-      Dr. Celwyn A. Panis, (Char kaayo) 😂<br>
+      Dr. Celwyn A. Panis<br>
       License No: ____________
     </div>
   `;
@@ -130,7 +116,74 @@ function printRecord(index) {
   window.print();
   document.body.removeChild(div);
 }
-//end here
+
+//start for PDF export
+function exportPDF(i) {
+  const r = records[i];
+  const pdf = document.getElementById("pdfContent");
+
+  pdf.style.display = "block";
+  pdf.style.width = "794px";   // A4 width only
+  pdf.style.padding = "40px";
+  pdf.style.background = "white";
+  pdf.style.color = "black";
+
+  pdf.innerHTML = `
+    <div style="text-align:center; border-bottom:2px solid black; padding-bottom:10px;">
+      <img src="images/clinic-logo.png" style="height:70px;"><br>
+      <h2>CELWYN MEDICAL CLINIC</h2>
+      <p>123 Hanap-hanapin Street, Di-matagpuan City, Philippines 1000</p>
+      <p>📞 +63 912 345 6789 | ✉ celwynclinic@email.com</p>
+    </div>
+
+    <h3 style="margin-top:25px;">PATIENT MEDICAL RECORD</h3>
+
+    <p><strong>Name:</strong> ${r.name}</p>
+    <p><strong>Age:</strong> ${r.age}</p>
+    <p><strong>Gender:</strong> ${r.gender}</p>
+    <p><strong>Date:</strong> ${r.date}</p>
+
+    <hr>
+
+    <h4>Vital Signs</h4>
+    <p>Blood Pressure: ${r.bp}</p>
+    <p>Heart Rate: ${r.hr}</p>
+    <p>Temperature: ${r.temp}</p>
+
+    <hr>
+
+    <h4>Clinical Details</h4>
+    <p><strong>Diagnosis:</strong> ${r.diagnosis}</p>
+    <p><strong>Medication:</strong> ${r.medication}</p>
+    <p><strong>Notes:</strong><br>${r.notes}</p>
+
+    <br><br><br>
+
+    <div style="margin-top:60px;">
+      _____________________________<br>
+      Dr. Celwyn A. Panis<br>
+      License No: ____________
+    </div>
+  `;
+
+  html2pdf().set({
+    margin: 0,
+    filename: `EMR_${r.name}.pdf`,
+    image: { type: 'jpeg', quality: 1 },
+    html2canvas: { scale: 1, scrollY: 0 },
+    jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: ['avoid-all'] }   // 🔥 THIS FIXES THE SPLIT
+  })
+  .from(pdf)
+  .save()
+  .then(() => {
+    pdf.style.display = "none";
+  });
+}
+
+
+
+//end for PDF export
 
 function render() {
   const search = document.getElementById("search").value.toLowerCase();
@@ -152,63 +205,12 @@ function render() {
         <div class="actions">
           <button onclick="editRecord(${i})">Edit</button>
           <button onclick="printRecord(${i})">Print</button>
+          <button onclick="exportPDF(${i})">Export PDF</button>
           <button onclick="deleteRecord(${i})">Delete</button>
         </div>
       </div>
     `;
   });
 }
-
-
-<button onclick="exportPDF(${i})">Export PDF</button>
-
-//for PDF EXPORT
-function exportPDF(index) {
-
-  const r = records[index];
-
-  const element = document.createElement("div");
-
-  element.innerHTML = `
-    <div style="text-align:center; border-bottom:2px solid black; padding-bottom:10px;">
-      <img src="images/clinic-logo.png" style="height:70px;"><br>
-      <h2>CELWYN (char lang) MEDICAL CLINIC</h2>
-      <p>123 Hanap-hanapin Street, Di-matagpuan City, Philippines 1000</p>
-      <p>📞 +63 912 345 6789 | ✉ celwynclinic@email.com</p>
-    </div>
-
-    <h3 style="margin-top:20px;">PATIENT MEDICAL RECORD</h3>
-
-    <p><strong>Name:</strong> ${r.name}</p>
-    <p><strong>Age:</strong> ${r.age}</p>
-    <p><strong>Gender:</strong> ${r.gender}</p>
-    <p><strong>Date:</strong> ${r.date}</p>
-
-    <hr>
-
-    <h4>Vital Signs</h4>
-    <p>Blood Pressure: ${r.bp}</p>
-    <p>Heart Rate: ${r.hr}</p>
-    <p>Temperature: ${r.temp}</p>
-
-    <hr>
-
-    <h4>Clinical Details</h4>
-    <p><strong>Diagnosis:</strong> ${r.diagnosis}</p>
-    <p><strong>Medication:</strong> ${r.medication}</p>
-    <p><strong>Notes:</strong><br>${r.notes}</p>
-
-    <br><br><br>
-
-    <div style="margin-top:50px;">
-      _____________________________<br>
-      Dr. Celwyn A. Panis, (Char kaayo) 😂<br>
-      License No: ____________
-    </div>
-  `;
-
-  html2pdf().from(element).save(r.name + "_Medical_Record.pdf");
-}
-
 
 render();
