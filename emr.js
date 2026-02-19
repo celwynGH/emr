@@ -78,37 +78,59 @@ function editRecord(index) {
 }
 //end here
 
+
+//start here for print record
+
 function printRecord(index) {
+
   const r = records[index];
 
   const div = document.createElement("div");
   div.className = "printable";
+
   div.innerHTML = `
-  <div style="display:flex; align-items:center;">
-    <img src="images/clinic-logo.png" style="height:60px; margin-right:15px;">
-    <h2>Medical Record</h2>
-  </div>
+    <div style="text-align:center; border-bottom:2px solid black; padding-bottom:10px;">
+      <img src="images/clinic-logo.png" style="height:70px;"><br>
+      <h2>CELWYN (char lang) MEDICAL CLINIC</h2>
+      <p>123 Hanap-hanapin Street, Di-matagpuan City, Philippines 1000</p>
+      <p>📞 +63 912 345 6789 | ✉ celwynclinic@email.com</p>
+    </div>
+
+    <h3 style="margin-top:20px;">PATIENT MEDICAL RECORD</h3>
 
     <p><strong>Name:</strong> ${r.name}</p>
     <p><strong>Age:</strong> ${r.age}</p>
     <p><strong>Gender:</strong> ${r.gender}</p>
     <p><strong>Date:</strong> ${r.date}</p>
+
     <hr>
-    <h3>Vital Signs</h3>
-    <p>BP: ${r.bp}</p>
-    <p>HR: ${r.hr}</p>
-    <p>Temp: ${r.temp}</p>
+
+    <h4>Vital Signs</h4>
+    <p>Blood Pressure: ${r.bp}</p>
+    <p>Heart Rate: ${r.hr}</p>
+    <p>Temperature: ${r.temp}</p>
+
     <hr>
-    <h3>Clinical Details</h3>
+
+    <h4>Clinical Details</h4>
     <p><strong>Diagnosis:</strong> ${r.diagnosis}</p>
     <p><strong>Medication:</strong> ${r.medication}</p>
     <p><strong>Notes:</strong><br>${r.notes}</p>
+
+    <br><br><br>
+
+    <div style="margin-top:50px;">
+      _____________________________<br>
+      Dr. Celwyn A. Panis, RN (Char kaayo) 😂<br>
+      License No: ____________
+    </div>
   `;
 
   document.body.appendChild(div);
   window.print();
   document.body.removeChild(div);
 }
+//end here
 
 function render() {
   const search = document.getElementById("search").value.toLowerCase();

@@ -94,3 +94,34 @@ button {
 .header-center {
   text-align: center;
 }
+
+/* added here */
+
+.clinic-address,
+.clinic-contact {
+  margin: 2px 0;
+  font-size: 14px;
+}
+
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 25px;
+  border-bottom: 3px solid #2c7be5;
+  padding-bottom: 10px;
+}
+
+.logo-container {
+  position: absolute;
+  left: 0;
+}
+
+.clinic-logo {
+  height: 80px;
+}
+
+.header-center {
+  text-align: center;
+}
